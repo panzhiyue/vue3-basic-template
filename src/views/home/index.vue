@@ -2,29 +2,18 @@
   <div>{{ message }}</div>
   <div>{{ count }}<br /><button @click="increment">自增</button></div>
 </template>
-<script>
+<script setup>
+import {ref,computed} from "vue"
 import { useHomeStore } from "@/store/home.js";
-let homeStore = null;
+let homeStore = useHomeStore();
 
-export default {
-  data() {
-    return {
-      message: "Hello World",
-    };
-  },
-  computed: {
-    count() {
-      return homeStore.count;
-    },
-  },
-  created() {
-    homeStore = useHomeStore();
-    console.log(homeStore);
-  },
-  methods: {
-    increment() {
-      homeStore.increment();
-    },
-  },
-};
+const message=ref('Hello World')
+const count =computed(()=>{
+    return homeStore.count;
+})
+
+const increment=()=>{
+    homeStore.increment();
+}
+
 </script>
